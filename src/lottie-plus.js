@@ -3,62 +3,62 @@ import PropTypes from 'prop-types';
 
 import Lottie from 'lottie-react';
 
-export const LottiePlus = React.forwardRef((props, ref) => {
-  const myLottieRef = useRef();
-  const lottieRef = props.lottieRef || myLottieRef;
-  const [stopRequestedAt, requestStop] = useState('never');
+export const LottiePlus = React.forwardRef(
+  ({ lottiePlusRef, startAt, stopAt, ...rest }, ref) => {
+    const myLottieRef = useRef();
+    const lottieRef = rest.lottieRef || myLottieRef;
+    const [stopRequestedAt, requestStop] = useState('never');
 
-  const betweenStartAndStop = (frame) =>
-    (props.stopAt > frame && frame > props.startAt) ||
-    (frame > props.startAt && props.startAt > props.stopAt) ||
-    (props.startAt > props.stopAt && props.stopAt > frame);
+    useEffect(() => {
+      if (lottiePlusRef) {
+        lottiePlusRef.current = {
+          startAnimation: () => {
+            // cancel any requested stop
+            requestStop('never');
+            // play the animation if not already playing
+            lottieRef.current?.play();
+          },
+          stopAnimation: () => {
+            // request a stop
+            requestStop('now');
+          },
+        };
+      }
+    }, [lottieRef, lottiePlusRef]);
 
-  useEffect(() => {
-    if (props.lottiePlusRef) {
-      props.lottiePlusRef.current = {
-        startAnimation: () => {
-          // cancel any requested stop
+    const onEnterFrame = (event) => {
+      const isBetweenStartAndStop = (frame) =>
+        (stopAt > frame && frame > startAt) ||
+        (frame > startAt && startAt > stopAt) ||
+        (startAt > stopAt && stopAt > frame);
+
+      if (stopRequestedAt === 'now') {
+        // stop has just been requested, so now figure out how to handle it
+        if (isBetweenStartAndStop(event.currentTime)) {
+          // if we are between the start and stop, request a stop with the
+          // current position as the request time
+          requestStop(event.currentTime);
+        } else {
+          // otherwise stop immediately and prepare for restart
           requestStop('never');
-          // play the animation if not already playing
-          lottieRef.current?.play();
-        },
-        stopAnimation: () => {
-          // request a stop
-          requestStop('now');
-        },
-      };
-    }
-  }, [lottieRef, props.lottiePlusRef]);
-
-  const handleEnterFrame = (event) => {
-    if (stopRequestedAt === 'now') {
-      // stop has just been requested, so now figure out how to handle it
-      if (betweenStartAndStop(event.currentTime)) {
-        // if we are between the start and stop, request a stop with the
-        // current position as the request time
-        requestStop(event.currentTime);
-      } else {
-        // otherwise stop immediately and prepare for restart
-        requestStop('never');
-        lottieRef.current?.goToAndStop(props.startAt);
+          lottieRef.current?.goToAndStop(startAt);
+        }
+      } else if (stopRequestedAt !== 'never') {
+        // stop has been requested and we are waiting to pass the stop-at frame
+        if (!isBetweenStartAndStop(event.currentTime)) {
+          // we've passed the stop-at frame so stop now and prepare for restart
+          requestStop('never');
+          lottieRef.current?.goToAndStop(startAt);
+        }
       }
-    } else if (stopRequestedAt !== 'never') {
-      // stop has been requested and we are waiting to pass the stop-at frame
-      if (!betweenStartAndStop(event.currentTime)) {
-        // we've passed the stop-at frame so stop now and prepare for restart
-        requestStop('never');
-        lottieRef.current?.goToAndStop(props.startAt);
-      }
-    }
 
-    // call a user-supplied handler if provided
-    props.onEnterFrame?.();
-  };
+      // call a user-supplied handler if provided
+      rest.onEnterFrame?.();
+    };
 
-  return (
-    <Lottie {...{ ...props, lottieRef, ref }} onEnterFrame={handleEnterFrame} />
-  );
-});
+    return <Lottie {...{ ...rest, lottieRef, onEnterFrame, ref }} />;
+  }
+);
 
 LottiePlus.propTypes = {
   ...Lottie.propTypes,

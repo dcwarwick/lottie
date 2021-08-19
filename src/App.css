@@ -1,0 +1,37 @@
+
+.hero-tile {
+  max-width: 400px;
+  margin-left: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #303030;
+}
+
+.hero-tile:hover {
+  background: #3c3c3c;
+}
+
+.hero-tile__animation {
+  width: 180px;
+  height: 180px;
+}
+
+.hero-tile__title {
+  font-weight: 400;
+  font-size: 32px;
+}
+
+.hero-tile__body {
+  line-height: 150%;
+  font-weight: 100;
+}
+
+.hero-tile__link {
+  color: white;
+  text-decoration: none;
+}
+
+.hero-tile__link::after {
+  content: '→';
+  padding-left: 12px;
+}

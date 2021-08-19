@@ -15,7 +15,6 @@ export const LottiePlus = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     if (props.lottiePlusRef) {
-      console.log('ping');
       props.lottiePlusRef.current = {
         startAnimation: () => {
           // cancel any requested stop

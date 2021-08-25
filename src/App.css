@@ -1,4 +1,31 @@
 
+.hero {
+  display: flex;
+  flex-direction: row;
+  padding: 32px;
+  border-bottom: 1px solid #393939;  
+  overflow: hidden;
+}
+
+.hero-left {
+  flex: 0 0 380px;
+  background-image: radial-gradient(transparent 10%, #161616 13%), radial-gradient(#161616 45%, transparent 60%), linear-gradient(315deg, #104080 0, 300px, #9060e0 381px);
+  background-position: 22px 0, 35% 90%, 0 0;
+  background-size: 36px 36px, 300% 300%, 100% 100%;
+}
+
+.hero-left__title {
+  font-size: 56px;
+  font-weight: 100;
+}
+
+.hero-right {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .hero-tile {
   max-width: 400px;
   margin-left: 16px;

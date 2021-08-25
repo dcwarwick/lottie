@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Lottie from 'lottie-react';
 
 export const LottiePlus = React.forwardRef(
-  ({ lottiePlusRef, startAt, stopAt, ...rest }, ref) => {
+  ({ loop, lottiePlusRef, startAt, stopAt, ...rest }, ref) => {
     const myLottieRef = useRef();
     const lottieRef = rest.lottieRef || myLottieRef;
     const [stopRequestedAt, requestStop] = useState('never');
@@ -13,10 +13,10 @@ export const LottiePlus = React.forwardRef(
       if (lottiePlusRef) {
         lottiePlusRef.current = {
           startAnimation: () => {
-            // cancel any requested stop
-            requestStop('never');
             // play the animation if not already playing
             lottieRef.current?.play();
+            // cancel a requested stop if looping, schedule a stop if not
+            requestStop(loop ? 'never' : 'now');
           },
           stopAnimation: () => {
             // request a stop
@@ -24,7 +24,7 @@ export const LottiePlus = React.forwardRef(
           },
         };
       }
-    }, [lottieRef, lottiePlusRef]);
+    }, [lottieRef, lottiePlusRef, loop]);
 
     const onEnterFrame = (event) => {
       const isBetweenStartAndStop = (frame) =>
@@ -56,13 +56,14 @@ export const LottiePlus = React.forwardRef(
       rest.onEnterFrame?.();
     };
 
-    return <Lottie {...{ ...rest, lottieRef, onEnterFrame, ref }} />;
+    return <Lottie {...{ ...rest, loop, lottieRef, onEnterFrame, ref }} />;
   }
 );
 
 LottiePlus.propTypes = {
   ...Lottie.propTypes,
   autoplay: PropTypes.bool,
+  loop: PropTypes.bool,
   /*
    * A ref object in which the following interaction methods will be stored:
    * - startAnimation: This function restarts the animation from the startAt
@@ -90,6 +91,7 @@ LottiePlus.propTypes = {
 
 LottiePlus.defaultProps = {
   autoplay: false,
+  loop: false,
   startAt: 0,
   stopAt: 0,
 };

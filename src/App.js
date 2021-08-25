@@ -77,7 +77,7 @@ const App = () => {
               animationData={data}
               lottiePlusRef={ref3}
               startAt={0}
-              stopAt={80}
+              stopAt={84}
             />
             <h2 className="hero-tile__title">Modernize data, infuse AI</h2>
             <p className="hero-tile__body">

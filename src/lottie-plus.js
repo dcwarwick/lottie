@@ -13,10 +13,10 @@ export const LottiePlus = React.forwardRef(
       if (lottiePlusRef) {
         lottiePlusRef.current = {
           startAnimation: () => {
-            // play the animation if not already playing
-            lottieRef.current?.play();
             // cancel a requested stop if looping, schedule a stop if not
             requestStop(loop ? 'never' : 'now');
+            // play the animation if not already playing
+            lottieRef.current?.play();
           },
           stopAnimation: () => {
             // request a stop

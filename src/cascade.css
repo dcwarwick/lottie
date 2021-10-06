@@ -1,0 +1,22 @@
+
+.Cascade__slide {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all calc(var(--Cascade-time) * 1ms) cubic-bezier(0, 0, 0, 1);
+}
+
+.Cascade__slide.Cascade--pending {
+  transform: translateY(calc(var(--Cascade-travel) * 1px));
+  opacity: 0;
+  transition: all 0s linear;
+}
+
+.Cascade__fade {
+  opacity: 1;
+  transition: all calc(var(--Cascade-time) * .3ms) linear calc(var(--Cascade-time) * .2ms);
+}
+
+.Cascade__fade.Cascade--pending {
+  opacity: 0;
+  transition: all 0s linear;
+}

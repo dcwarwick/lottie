@@ -1,9 +1,11 @@
 
+@import 'cascade.css';
+
 .hero {
   display: flex;
   flex-direction: row;
   padding: 32px;
-  border-bottom: 1px solid #393939;  
+  border-bottom: 1px solid #393939;
   overflow: hidden;
 }
 
@@ -17,6 +19,7 @@
 .hero-left__title {
   font-size: 56px;
   font-weight: 100;
+  color: white;
 }
 
 .hero-right {
@@ -32,6 +35,7 @@
   margin-bottom: 16px;
   padding: 16px;
   background: #303030;
+  color: white;
 }
 
 .hero-tile:hover {

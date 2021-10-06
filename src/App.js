@@ -4,6 +4,7 @@ import { useRef } from 'react';
 
 import Lottie from 'lottie-react';
 import { LottiePlus } from './lottie-plus.js';
+import { Cascade } from './cascade.js';
 
 import automation from './animations/automation.json';
 import data from './animations/data.json';
@@ -41,12 +42,13 @@ const App = () => {
       </div>
 
       <div className="hero">
-        <div className="hero-left lazy-load-item__fader">
+        <Cascade type="fade" className="hero-left">
           <h1 className="hero-left__title">Welcome to Cloud Pak!</h1>
-        </div>
+        </Cascade>
         <div className="hero-right">
-          <div
-            className="hero-tile lazy-load-item__slider"
+          <Cascade
+            type="slide"
+            className="hero-tile"
             onMouseEnter={() => ref2.current?.startAnimation()}
             onMouseLeave={() => ref2.current?.stopAnimation()}>
             <LottiePlus
@@ -66,10 +68,11 @@ const App = () => {
             <a href="www.ibm.com" className="hero-tile__link">
               Automation hub
             </a>
-          </div>
+          </Cascade>
 
-          <div
-            className="hero-tile lazy-load-item__slider"
+          <Cascade
+            type="slide"
+            className="hero-tile"
             onMouseEnter={() => ref3.current?.startAnimation()}
             onMouseLeave={() => ref3.current?.stopAnimation()}>
             <LottiePlus
@@ -87,10 +90,11 @@ const App = () => {
             <a href="www.ibm.com" className="hero-tile__link">
               Data hub
             </a>
-          </div>
+          </Cascade>
 
-          <div
-            className="hero-tile lazy-load-item__slider"
+          <Cascade
+            type="slide"
+            className="hero-tile"
             onMouseEnter={() => ref4.current?.startAnimation()}
             onMouseLeave={() => ref4.current?.stopAnimation()}>
             <LottiePlus
@@ -109,10 +113,11 @@ const App = () => {
             <a href="www.ibm.com" className="hero-tile__link">
               Security hub
             </a>
-          </div>
+          </Cascade>
 
-          <div
-            className="hero-tile lazy-load-item__slider"
+          <Cascade
+            type="slide"
+            className="hero-tile"
             onMouseEnter={() => ref5.current?.startAnimation()}
             onMouseLeave={() => ref5.current?.stopAnimation()}>
             <LottiePlus
@@ -131,7 +136,7 @@ const App = () => {
             <a href="www.ibm.com" className="hero-tile__link">
               Administration hub
             </a>
-          </div>
+          </Cascade>
         </div>
       </div>
     </>
